@@ -26,39 +26,96 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
+// const navItems: NavItem[] = [
+//   {
+//     icon: <GridIcon />,
+//     name: "Dashboard",
+//     subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+//   },
+//   {
+//     icon: <CalenderIcon />,
+//     name: "Calendar",
+//     path: "/calendar",
+//   },
+//   {
+//     icon: <UserCircleIcon />,
+//     name: "User Profile",
+//     path: "/profile",
+//   },
+
+//   {
+//     name: "Forms",
+//     icon: <ListIcon />,
+//     subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
+//   },
+//   {
+//     name: "Tables",
+//     icon: <TableIcon />,
+//     subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
+//   },
+//   {
+//     name: "Pages",
+//     icon: <PageIcon />,
+//     subItems: [
+//       { name: "Blank Page", path: "/blank", pro: false },
+//       { name: "404 Error", path: "/error-404", pro: false },
+//     ],
+//   },
+// ];
+
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
-  },
-  {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
+    subItems: [{ name: "Overview", path: "/", pro: false }],
   },
   {
     icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
-
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
+    name: "Users",
+    path: "/users",
   },
   {
-    name: "Tables",
-    icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
     icon: <PageIcon />,
+    name: "Messages",
+    path: "/messages",
+  },
+  {
+    icon: <PageIcon />,
+    name: "Notifications",
+    path: "/notifications",
+  },
+  {
+    icon: <PageIcon />,
+    name: "Analytics",
+    path: "/analytics",
+  },
+  {
+    icon: <PageIcon />,
+    name: "Settings",
+    path: "/settings",
+  },
+  {
+    icon: <PageIcon />,
+    name: "Groups",
     subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
+      { name: "Manage Groups", path: "/groups/manage", pro: false },
+      { name: "Group Settings", path: "/groups/settings", pro: false },
+    ],
+  },
+  {
+    icon: <PageIcon />,
+    name: "Moderation",
+    subItems: [
+      { name: "Content Flags", path: "/moderation/flags", pro: false },
+      { name: "User Bans", path: "/moderation/bans", pro: false },
+    ],
+  },
+  {
+    icon: <PageIcon />,
+    name: "Reports",
+    subItems: [
+      { name: "User Activity", path: "/reports/user-activity", pro: false },
+      { name: "Message Logs", path: "/reports/message-logs", pro: false },
     ],
   },
 ];
