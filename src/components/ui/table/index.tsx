@@ -25,10 +25,22 @@ interface TableRowProps {
 }
 
 // Props for TableCell
+// interface TableCellProps {
+//   children: ReactNode; // Cell content
+//   isHeader?: boolean; // If true, renders as <th>, otherwise <td>
+//   className?: string; // Optional className for styling
+// }
+// Props for TableCell
 interface TableCellProps {
   children: ReactNode; // Cell content
   isHeader?: boolean; // If true, renders as <th>, otherwise <td>
   className?: string; // Optional className for styling
+  colSpan?: number; // Add colSpan prop
+}
+
+interface TableHeadProps {
+  children: React.ReactNode;
+  className?: string;
 }
 
 // Table Component
@@ -40,6 +52,17 @@ const Table: React.FC<TableProps> = ({ children, className }) => {
 const TableHeader: React.FC<TableHeaderProps> = ({ children, className }) => {
   return <thead className={className}>{children}</thead>;
 };
+
+
+const TableHead: React.FC<TableHeadProps> = ({ children, className }) => {
+  return <th className={className}>{children}</th>;
+};
+
+// TableHead Component
+// const TableHead: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
+//   return <th className={className}>{children}</th>;
+// };
+
 
 // TableBody Component
 const TableBody: React.FC<TableBodyProps> = ({ children, className }) => {
@@ -61,4 +84,4 @@ const TableCell: React.FC<TableCellProps> = ({
   return <CellTag className={` ${className}`}>{children}</CellTag>;
 };
 
-export { Table, TableHeader, TableBody, TableRow, TableCell };
+export { Table, TableHeader, TableBody, TableRow, TableCell ,TableHead};

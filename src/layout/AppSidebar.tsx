@@ -75,27 +75,27 @@ const navItems: NavItem[] = [
     path: "/users",
   },
   {
-    icon: <PageIcon />,
+    icon: <PlugInIcon />,
     name: "Messages",
     path: "/messages",
   },
   {
-    icon: <PageIcon />,
+    icon: <BoxCubeIcon />,
     name: "Notifications",
     path: "/notifications",
   },
   {
-    icon: <PageIcon />,
+    icon: <PieChartIcon />,
     name: "Analytics",
     path: "/analytics",
   },
   {
-    icon: <PageIcon />,
+    icon: <HorizontaLDots />,
     name: "Settings",
     path: "/settings",
   },
   {
-    icon: <PageIcon />,
+    icon: <BoxCubeIcon />,
     name: "Groups",
     subItems: [
       { name: "Manage Groups", path: "/groups/manage", pro: false },
@@ -103,7 +103,7 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    icon: <PageIcon />,
+    icon: <PlugInIcon />,
     name: "Moderation",
     subItems: [
       { name: "Content Flags", path: "/moderation/flags", pro: false },
@@ -111,7 +111,7 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    icon: <PageIcon />,
+    icon: <PieChartIcon />,
     name: "Reports",
     subItems: [
       { name: "User Activity", path: "/reports/user-activity", pro: false },
@@ -368,7 +368,9 @@ const AppSidebar: React.FC = () => {
         <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
-              <Image
+              {
+              <h2>TellDemm Admin Panel</h2>
+              /* <Image
                 className="dark:hidden"
                 src="/images/logo/logo.svg"
                 alt="Logo"
@@ -381,7 +383,7 @@ const AppSidebar: React.FC = () => {
                 alt="Logo"
                 width={150}
                 height={40}
-              />
+              /> */}
             </>
           ) : (
             <Image
