@@ -84,7 +84,9 @@ const AppHeader: React.FC = () => {
           </button>
 
           <Link href="/" className="lg:hidden">
-            <Image
+            {
+            <h2>Telldemm Admin</h2>
+            /* <Image
               width={154}
               height={32}
               className="dark:hidden"
@@ -97,7 +99,7 @@ const AppHeader: React.FC = () => {
               className="hidden dark:block"
               src="./images/logo/logo-dark.svg"
               alt="Logo"
-            />
+            /> */}
           </Link>
 
           <button

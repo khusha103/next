@@ -1,51 +1,60 @@
+// app/(dashboard)/users/page.tsx or wherever your route lives
+"use client";
+
+import React, { useEffect, useState } from "react";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
-import { Metadata } from "next";
 import { columns, User } from "./columns";
 import { DataTable } from "@/components/ui/data-table/data-table";
-// import { DataTable } from "@/components/ui/data-table";
-// import { columns, User } from "@/app/columns";
+import { fetchUsers } from "../services/userService";
+// import { fetchUsers } from "@/services/userService";
 
-export const metadata: Metadata = {
-  title: "Next.js Blank Page | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Blank Page TailAdmin Dashboard Template",
-};
+export default function UserTablePage() {
+  const [data, setData] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-// Sample data (replace with API fetch if needed)
-async function getData(): Promise<User[]> {
-  return [
-    { id: "1", name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com", role: "User" },
-    { id: "3", name: "Bob Johnson", email: "bob@example.com", role: "Editor" },
-      { id: "1", name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com", role: "User" },
-    { id: "3", name: "Bob Johnson", email: "bob@example.com", role: "Editor" },
-      { id: "1", name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com", role: "User" },
-    { id: "3", name: "Bob Johnson", email: "bob@example.com", role: "Editor" },
-      { id: "1", name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com", role: "User" },
-    { id: "3", name: "Bob Johnson", email: "bob@example.com", role: "Editor" },
-      { id: "1", name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com", role: "User" },
-    { id: "3", name: "Bob Johnson", email: "bob@example.com", role: "Editor" },
-      { id: "1", name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com", role: "User" },
-    { id: "3", name: "Bob Johnson", email: "bob@example.com", role: "Editor" },
-  ];
-}
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const apiUsers = await fetchUsers();
 
-export default async function BlankPage() {
-  const data = await getData();
+        // Map API data to local `User` type
+        const mappedUsers: User[] = apiUsers.map((apiUser) => ({
+          user_id: apiUser.user_id,
+          name: apiUser.name,
+          phone_number: apiUser.phone_number,
+          status: apiUser.status,
+          last_seen: apiUser.last_seen,
+          is_online: apiUser.is_online,
+        }));
+
+        setData(mappedUsers);
+      } catch (err) {
+        setError("Failed to fetch users.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUsers();
+  }, []);
 
   return (
     <div>
-      <PageBreadcrumb pageTitle="Blank Page" />
+      <PageBreadcrumb pageTitle="User Table" />
       <div className="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
         <div className="mx-auto w-full max-w-[1140px]">
           <h3 className="mb-4 font-semibold text-gray-800 text-theme-xl dark:text-white/90 sm:text-2xl">
-            User Data Table
+            Users
           </h3>
-          <DataTable columns={columns} data={data} />
+
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p className="text-red-500">{error}</p>
+          ) : (
+            <DataTable columns={columns} data={data} />
+          )}
         </div>
       </div>
     </div>
