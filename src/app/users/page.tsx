@@ -29,7 +29,9 @@ export default function UserTablePage() {
         }));
 
         setData(mappedUsers);
+      // } catch (err) {
       } catch (err) {
+        console.error(err); // or log it for debugging
         setError("Failed to fetch users.");
       } finally {
         setLoading(false);
