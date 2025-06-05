@@ -14,7 +14,28 @@ export type ApiUser = {
   key_created_at: string | null;
   last_seen: string;
   is_online: boolean;
-};
+}
+
+
+
+interface ApiMessage {
+  message_id: number;
+  sender: string;
+  recipient: string;
+  message: string;
+  timestamp: string;
+  status: string; // e.g., "sent"
+  actions: string[]; // e.g., ["view", "delete"]
+}
+
+interface ApiResponse {
+  success: boolean;
+  data: ApiMessage[];
+  pagination: {
+    page: number;
+    limit: number;
+  };
+}
 
 const API_BASE_URL = "https://telldemm-backend.onrender.com";
 
@@ -32,5 +53,21 @@ export const fetchUsers = async (): Promise<ApiUser[]> => {
   } catch (error) {
     console.error("API Error:", error);
     throw new Error("Failed to fetch users. Please try again.");
+  }
+};
+
+
+export const fetchMessages = async (): Promise<ApiMessage[]> => {
+  try {
+    const response = await axios.get<ApiResponse>(`${API_BASE_URL}/admin/messages`, {
+      headers: getAuthHeaders(),
+    });
+    if (!response.data.success) {
+      throw new Error("API request failed.");
+    }
+    return response.data.data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw new Error("Failed to fetch messages. Please try again.");
   }
 };

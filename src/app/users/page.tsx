@@ -5,7 +5,9 @@ import React, { useEffect, useState } from "react";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { columns, User } from "./columns";
 import { DataTable } from "@/components/ui/data-table/data-table";
+// import { fetchMessages, fetchUsers } from "../services/userService";
 import { fetchUsers } from "../services/userService";
+
 // import { fetchUsers } from "@/services/userService";
 
 export default function UserTablePage() {
@@ -17,6 +19,9 @@ export default function UserTablePage() {
     const loadUsers = async () => {
       try {
         const apiUsers = await fetchUsers();
+        // const apiMessages = await fetchMessages();
+
+
 
         // Map API data to local `User` type
         const mappedUsers: User[] = apiUsers.map((apiUser) => ({
