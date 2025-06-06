@@ -3,7 +3,6 @@
 import Badge from "@/components/ui/badge/Badge";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatDistanceToNow } from "date-fns";
-// import Badge from "@/components/ui/badge"; // Adjust the path as needed
 
 export type User = {
   user_id: number;
@@ -33,6 +32,16 @@ const mapStatusBadge = (
 };
 
 export const columns: ColumnDef<User>[] = [
+  {
+    id: "sequential_id",
+    header: "S.No",
+    cell: ({ row, table }) => {
+      const pageIndex = table.getState().pagination.pageIndex;
+      const pageSize = table.getState().pagination.pageSize;
+      return pageIndex * pageSize + row.index + 1;
+    },
+    enableSorting: false, // Disable sorting for sequential ID
+  },
   {
     accessorKey: "user_id",
     header: "User ID",

@@ -6,7 +6,7 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { columns, User } from "./columns";
 import { DataTable } from "@/components/ui/data-table/data-table";
 // import { fetchMessages, fetchUsers } from "../services/userService";
-import { fetchUsers } from "../services/userService";
+import { fetchUsers } from "../services/apiService";
 
 // import { fetchUsers } from "@/services/userService";
 

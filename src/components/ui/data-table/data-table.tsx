@@ -7,6 +7,8 @@ import {
   getPaginationRowModel,
   useReactTable,
   getFilteredRowModel,
+  getSortedRowModel,
+  SortingState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -17,8 +19,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Button from "../button/Button";
+import { Search, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Search } from "lucide-react";
+// import { columns, User } from "@/lib/columns"; // Import columns and User type
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,8 +34,8 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState("");
   const [debouncedFilter, setDebouncedFilter] = useState("");
+  const [sorting, setSorting] = useState<SortingState>([]);
 
-  // Debounce the search input to prevent excessive re-renders
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedFilter(globalFilter);
@@ -46,10 +49,13 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       globalFilter: debouncedFilter,
+      sorting,
     },
     onGlobalFilterChange: setDebouncedFilter,
+    onSortingChange: setSorting,
     initialState: {
       pagination: {
         pageIndex: 0,
@@ -60,7 +66,6 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="rounded-md border border-gray-200 dark:border-gray-700 shadow-sm">
-      {/* Search Bar */}
       <div className="flex items-center px-4 py-4 sm:px-6">
         <div className="relative w-full sm:w-80">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -83,12 +88,30 @@ export function DataTable<TData, TValue>({
                     key={header.id}
                     className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider"
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                    <div
+                      className="flex items-center space-x-2 cursor-pointer"
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <span>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </span>
+                      {header.column.getCanSort() && (
+                        <span className="text-gray-400">
+                          {{
+                            asc: <ArrowUp className="h-4 w-4" />,
+                            desc: <ArrowDown className="h-4 w-4" />,
+                            false: <ArrowUpDown className="h-4 w-4" />,
+                          }[header.column.getIsSorted() as string] || (
+                            <ArrowUpDown className="h-4 w-4" />
+                          )}
+                        </span>
+                      )}
+                    </div>
                   </TableHead>
                 ))}
               </TableRow>
@@ -125,7 +148,6 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {/* Pagination Controls */}
       <div className="flex items-center justify-between px-4 py-4 sm:px-6">
         <div className="flex items-center space-x-2">
           <p className="text-sm text-gray-700 dark:text-gray-300">
